@@ -6,7 +6,7 @@
 
 Short, science-backed lessons wrapped in addictive gamification. Built with Expo + React Native, with AI-generated content powered by Claude.
 
-`Expo SDK 57` · `React Native 0.86` · `TypeScript` · `Expo Router`
+`Expo SDK 56` · `React Native 0.85` · `TypeScript` · `Expo Router`
 
 </div>
 
@@ -31,7 +31,7 @@ The app is **fully playable offline** with built-in sample content, and can gene
 
 | Area | Choice |
 | --- | --- |
-| Framework | Expo (SDK 57), React Native 0.86, TypeScript |
+| Framework | Expo (SDK 56), React Native 0.85, TypeScript |
 | Navigation | Expo Router (file-based) + server API routes |
 | State | Zustand, persisted to AsyncStorage |
 | Audio / feedback | expo-speech (TTS), expo-haptics |

@@ -2,11 +2,11 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-/ IMPORTANT: Expo has changed a lot. Read the versioned docs at https://docs.expo.dev/versions/v57.0.0/ before writing Expo-specific code.
+/ IMPORTANT: Expo has changed a lot. Read the versioned docs at https://docs.expo.dev/versions/v56.0.0/ before writing Expo-specific code.
 
 ## What this is
 
-**Fluently** — an interactive English-learning mobile app (Bright-style) for native Hebrew speakers. Expo (SDK 57) + Expo Router + TypeScript. Short lessons built on second-language-acquisition principles (comprehensible input → recognition → production → spaced review), wrapped in gamification (hearts / XP / streak) and a freemium gate.
+**Fluently** — an interactive English-learning mobile app (Bright-style) for native Hebrew speakers. Expo (SDK 56) + Expo Router + TypeScript. Short lessons built on second-language-acquisition principles (comprehensible input → recognition → production → spaced review), wrapped in gamification (hearts / XP / streak) and a freemium gate.
 
 The primary maintainer is a **beginner developer** — favor simple, readable code, few dependencies, and keep every change runnable on-device via Expo Go.
 
