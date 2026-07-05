@@ -1,56 +1,97 @@
-# Welcome to your Expo app 👋
+<div align="center">
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+# Fluently
 
-## Get started
+**An interactive English-learning app for Hebrew speakers — Bright-style.**
 
-1. Install dependencies
+Short, science-backed lessons wrapped in addictive gamification. Built with Expo + React Native, with AI-generated content powered by Claude.
 
-   ```bash
-   npm install
-   ```
+`Expo SDK 57` · `React Native 0.86` · `TypeScript` · `Expo Router`
 
-2. Start the app
+</div>
 
-   ```bash
-   npx expo start
-   ```
+---
 
-In the output, you'll find options to open the app in a
+## Overview
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+Fluently teaches English through bite-sized lessons grounded in second-language-acquisition research, not just quizzes. Every lesson introduces new words by **sound and meaning first**, then drives them into memory through escalating retrieval practice and spaced repetition. Progress is powered by a streak / XP / hearts loop that keeps learners coming back.
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+The app is **fully playable offline** with built-in sample content, and can generate unlimited personalized lessons on demand via the Claude API.
 
-## Get a fresh project
+## Features
 
-When you're ready, run:
+- **Adaptive onboarding** — learners self-rate, then a short placement quiz *verifies* their real CEFR level (A1–C1) and they pick the topics they care about.
+- **Pedagogical lesson flow** — Listen + Translation → escalating practice (listen → choose → translate → use in context) → spaced review of earlier words.
+- **Spaced repetition (SRS)** — a Leitner system schedules each learned word for review at the right time for long-term retention.
+- **Gamification** — daily streak 🔥, XP ⭐, and hearts ❤️ with instant audio, animation, and haptic feedback.
+- **AI-generated content** — lessons and placement quizzes tailored to the learner's level and interests (Claude Haiku 4.5), with local caching and an offline fallback.
+- **Freemium** — 4 new words per day for free; Premium unlocks unlimited learning.
+
+## Tech stack
+
+| Area | Choice |
+| --- | --- |
+| Framework | Expo (SDK 57), React Native 0.86, TypeScript |
+| Navigation | Expo Router (file-based) + server API routes |
+| State | Zustand, persisted to AsyncStorage |
+| Audio / feedback | expo-speech (TTS), expo-haptics |
+| AI | `@anthropic-ai/sdk` — server-side only |
+
+## Getting started
+
+**Prerequisites:** Node 18+ and the [Expo Go](https://expo.dev/go) app on your phone.
 
 ```bash
-npm run reset-project
+git clone https://github.com/ArielBY12/fluently.git
+cd fluently
+npm install
+npx expo start          # scan the QR with Expo Go to run on your phone
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+Prefer the browser? `npx expo start --web`.
 
-### Other setup steps
+### Enabling AI content (optional)
 
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
+The app ships with sample lessons and works with no setup. To generate content dynamically with Claude:
 
-## Learn more
+1. `cp .env.example .env` and set `ANTHROPIC_API_KEY`.
+2. The key is used **only** by the server API routes (`src/app/api/`) — it is never bundled into the app.
+3. To reach the AI routes from a physical device, also set `EXPO_PUBLIC_API_URL` to your machine's LAN address (see `.env.example`). On web it works automatically.
 
-To learn more about developing your project with Expo, look at the following resources:
+## Project structure
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+```
+src/
+├── app/                 # screens (Expo Router)
+│   ├── (tabs)/          #   home learning path + profile
+│   ├── onboarding.tsx   #   self-rate → placement quiz → categories → goal
+│   ├── lesson/[id].tsx  #   Learn → Practice → Review runner
+│   ├── results.tsx  paywall.tsx
+│   └── api/             #   SERVER: Claude proxy (generate-lesson, placement-quiz)
+├── components/          # UI kit, exercise renderer, TTS speaker
+├── data/curriculum.ts   # categories, sample lessons, sample placement quiz
+├── lib/                 # content (cache→AI→sample), srs, claude (prompts), date
+├── store/gameStore.ts   # persisted game state (single source of truth)
+├── types.ts             # Lesson / Word / Exercise contract
+└── theme.ts             # design tokens
+```
 
-## Join the community
+See [CLAUDE.md](CLAUDE.md) for a deeper architecture guide.
 
-Join our community of developers creating universal apps.
+## Verification
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+```bash
+npx tsc --noEmit         # type-check
+npx expo export -p web   # full bundle incl. API routes
+```
+
+## Roadmap
+
+- [ ] Real subscription billing (RevenueCat) — the Premium button is currently a dev stub
+- [ ] Accounts + cloud sync (Supabase)
+- [ ] Daily streak notifications & leaderboards
+- [ ] Pronunciation practice (speech recognition)
+
+## License
+
+MIT — see [LICENSE](LICENSE).
